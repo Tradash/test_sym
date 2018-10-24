@@ -1,0 +1,33 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "method",
+    "settings"
+  ],
+  "properties": {
+    "method": {
+      "$id": "#/properties/method",
+      "type": "string",
+      "title": "The Method Schema",
+      "default": "",
+      "examples": [
+        "getSeats"
+      ],
+      "pattern": "^(getSeats)|(getCategories)|(getSectors)|(getLines)$"
+    },
+    "settings": {
+      "$id": "#/properties/settings",
+      "type": "object",
+      "title": "The Settings Schema",
+      "required": [
+        "filter",
+        "fields"
+      ]
+  
+    }
+  }
+}

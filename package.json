@@ -1,0 +1,28 @@
+{
+  "name": "test_syn",
+  "version": "1.0.0",
+  "description": "Тестовое задание на вакансию",
+  "main": "main.js",
+  "scripts": {
+    "start": "node --inspect main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tradash/test_syn.git"
+  },
+  "keywords": [
+    "Node"
+  ],
+  "author": "Bobkov Alexandr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tradash/test_syn/issues"
+  },
+  "homepage": "https://github.com/Tradash/test_syn#readme",
+  "dependencies": {
+    "ajv": "^6.5.4",
+    "body-parser": "^1.18.3",
+    "multiparty": "^4.2.1",
+    "ws": "^6.1.0"
+  }
+}
