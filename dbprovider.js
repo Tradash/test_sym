@@ -1,9 +1,9 @@
 const data = require('./data/bd_s.json');
-const valmain = require('./model').valmain;
+
 const valSeats = require('./model').valSeats;
-const valSector = require('./model').valSector;
-const vsCategores = require('./model').vsCategores;
-const vsLines = require('./model').vsLines;
+const valSectors = require('./model').valSectors;
+const valCategories = require('./model').valCategories;
+const valLines = require('./model').valLines;
 
 class dbModel {
   constructor() {
@@ -22,31 +22,33 @@ function getSeats(q) {
 
 function getCategories(q) {
   this.func = getData;
-  this.val = vsCategores;
-  return this.func(data.response.categories, q), this.val;
+  this.val = valCategories;
+  return this.func(data.response.categories, q, this.val);
 };
 
 function getSectors(q) {
   this.func = getData;
-  this.val = valSector;
+  this.val = valSectors;
   return this.func(data.response.sectors, q, this.val);
 };
 
 function getLines(q) {
   this.func = getData;
-  this.val = getLines;
+  this.val = valLines;
   return this.func(data.response.lines, q, this.val);
 };
 
-const getData = (dbColl, q, val) => {
+
+
+const getData = (d, qn, val) => {
   let count; let record;
   let result = [];
-  let valid = valmain(qs);
-  if (!valid) {
-    return {error: val.errors, data: null}
-  }
-  if (!q) return;
-  const d = dbColl;
+  
+  // Проверка тела запроса
+  const valid = val(qn);
+  if (!valid) { return {error: val.errors, data: null}; }
+  // Выделяем данные запроса
+  const q = qn.settings;
   for (id in d) {
     count = q.filter.filter((x) => d[id][x.field] == x.value ).length;
     if (count !== 0) {
@@ -63,7 +65,7 @@ const getData = (dbColl, q, val) => {
       }
     }
   }
-  return result;
+  return {error: null, data: result};
 };
 
 

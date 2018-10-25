@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <html>
 	<body onload="loadform()">
-		<form id ="f1" method="post" onSubmit="return false;">
+		<form id ="f1" method="post">
 			<p>Сформируйте запрос: </p>
 			<textarea id='q1' name="json" value="" rows=10 cols=40><</textarea>
 			<hr>
@@ -31,11 +31,11 @@
 			ws.onmessage = (event) => {
 				console.log(event) ;
 				let d = JSON.parse(event.data);
-				if (d.n === 1) {
-					document.getElementById("lbl1").innerHTML = JSON.stringify(d.d);
-				} else {
-					document.getElementById("resp").innerHTML = JSON.stringify(d.d);	
-				}
+				//if (d.n === 1) {
+				//	document.getElementById("lbl1").innerHTML = JSON.stringify(d.d);
+				//} else {
+					document.getElementById("resp").innerHTML = event.data;	
+				//}
 			}
 			function fSubmit() {
 
@@ -48,14 +48,14 @@
 			function xxsend() {
 				var f = document.getElementById("f1");
 				f.enctype = "www-form-urlencoded";
-				f.action = "#";
+				f.action = "/result";
 				//console.log(44);
 				f.submit();
 			}	
 			function fdsend() {
 				var f = document.getElementById("f1");
 				f.enctype = "multipart/form-data"
-				f.action = "#";
+				f.action = "/result";
 				//console.log(55);
 				f.submit();
 			}	

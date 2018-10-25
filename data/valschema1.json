@@ -1,7 +1,7 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
+  "$id": "Check_Header",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -17,7 +17,7 @@
       "examples": [
         "getSeats"
       ],
-      "pattern": "^(getSeats)|(getCategories)|(getSectors)|(getLines)$"
+      "pattern": "^(getLines)|(getSeats)|(getCategories)|(getSectors)$"
     },
     "settings": {
       "$id": "#/properties/settings",

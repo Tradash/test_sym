@@ -1,17 +1,18 @@
-const http = require('http');\
+const http = require('http');
 
 const webS = require('ws');
 const wsServer = webS.Server;
 const ws = new wsServer({port: 5001})
 
-const views = new require('./controll').views;
+const views = new require('./control').views;
 const controller = require('./control').controller;
-
-
-const fs = require('fs')
 
 const dataStore =  require('./dbprovider');
 const db = new dataStore();
+
+const fs = require('fs')
+
+
 
 //console.log('check db ',db);
 

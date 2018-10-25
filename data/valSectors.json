@@ -1,7 +1,7 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
+  "$id": "validate_sector",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -38,7 +38,7 @@
                 "examples": [
                   "sector"
                 ],
-                "pattern": "^(id)|(name)|(event)$"
+                "pattern": "^(id)|(name)|(event)|(translate_x)|(translate_y)|(scale)|(rotate)|(category)$"
               },
               "value": {
                 "$id": "#/properties/settings/properties/filter/items/properties/value",
@@ -73,7 +73,7 @@
               "line",
               "category"
             ],
-            "pattern": "^(id)|(name)|(event)$"
+            "pattern": "^(id)|(name)|(event)|(translate_x)|(translate_y)|(scale)|(rotate)|(category)$"
           }
         }
       }

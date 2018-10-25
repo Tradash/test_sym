@@ -1,5 +1,7 @@
 const parse = require('querystring').parse;
 const multiparty = require('multiparty');
+const valmain = require('./model').valmain;
+
 
 
 class views {
@@ -11,21 +13,16 @@ class views {
 	}
 }
 
-// Проверка запроса
-const valData = (data) => {
-  const valid = validate(JSON.parse(data));
-  const result = {validate: valid, error: validate.errors};
-  return result;
-};
 // Выролнение запроса
-const getData = (q) => {
+const getData = (q, db) => {
 	let qn;
 	if (typeof(q) === "string") { qn = JSON.parse(q)} 
 		else { qn = q};
-	
-  //console.log("=====", q.method, db)
-  const result = db[qn.method](qn.settings);
-  return result;
+	// Проверка заголовка запроса
+  	let valid = valmain(qn);
+  	if (!valid) { return {error: valmain.errors, data: null}; }	
+  	const result = db[qn.method](qn);
+  	return result;
 }
 
 function collectRequestData(request, callback) {
@@ -36,29 +33,30 @@ function collectRequestData(request, callback) {
             body += chunk.toString();
         });
         request.on('end', () => {
-            callback(parse(body).json, "x-www-form-urlencoded");
+            callback(parse(body).json);
         });
     }
     else {
       let form = new multiparty.Form();
       form.parse(request, function(err, fields, files) {
-        callback(fields.json[0], "data");
+        callback(fields.json[0]);
       });
         
     }
 }
 
 
-const controller = (views, modal) = {
+const controller = (views, dbmodal) => {
 	if (views.socket) {
-		const result = getData(views.query);
+		const result = getData(views.query, dbmodal);
+		views.socket.send(JSON.stringify(result));
 	} else {
-		collectRequestData(req, (quer, result) => {
-            
-            const v = valData(quer);
-            openWS.send(JSON.stringify({n:1, d:quer}))
-            openWS.send(JSON.stringify({n:2, d:v}))
-            //res.end(`Parsed data belonging to ${info} ${JSON.stringify(result)}`);
+		collectRequestData(views.req, (query) => {
+            const result = getData(query, dbmodal);
+            //const v = valData(quer);
+            //openWS.send(JSON.stringify({n:1, d:quer}))
+            //openWS.send(JSON.stringify({n:2, d:v}))
+            views.res.end(JSON.stringify(result));
             //req.abort();
         });
 	}
@@ -66,5 +64,5 @@ const controller = (views, modal) = {
 
 module.exports = {
 	views: views,
-	controller: controller;
+	controller: controller
 }
