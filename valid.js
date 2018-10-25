@@ -1,10 +1,10 @@
 const ajV = require('ajv');
 const ajv = new ajV({allErrors: true});
-const vsm = require('./data/valschema1.json');
-const vsSeats = require('./data/valSeats.json');
-const vsSectors = require('./data/valSectors.json');
-const vsCategories = require('./data/valCategories.json');
-const vsLines = require('./data/valLines.json');
+const vsm = require('./validate/valmain.json');
+const vsSeats = require('./validate/valSeats.json');
+const vsSectors = require('./validate/valSectors.json');
+const vsCategories = require('./validate/valCategories.json');
+const vsLines = require('./validate/valLines.json');
 
 exports.valmain = ajv.compile(vsm);
 exports.valSeats = ajv.compile(vsSeats);

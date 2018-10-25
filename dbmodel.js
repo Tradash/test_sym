@@ -1,9 +1,10 @@
+// Загрузка данных
 const data = require('./data/bd_s.json');
 
-const valSeats = require('./model').valSeats;
-const valSectors = require('./model').valSectors;
-const valCategories = require('./model').valCategories;
-const valLines = require('./model').valLines;
+const valSeats = require('./valid').valSeats;
+const valSectors = require('./valid').valSectors;
+const valCategories = require('./valid').valCategories;
+const valLines = require('./valid').valLines;
 
 class dbModel {
   constructor() {

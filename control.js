@@ -1,6 +1,6 @@
 const parse = require('querystring').parse;
 const multiparty = require('multiparty');
-const valmain = require('./model').valmain;
+const valmain = require('./valid').valmain;
 
 
 
@@ -10,6 +10,7 @@ class views {
 		this.res = null;
 		this.socket = null;
 		this.query = null;
+    this.sender = null;
 	}
 }
 
@@ -47,17 +48,14 @@ function collectRequestData(request, callback) {
 
 
 const controller = (views, dbmodal) => {
-	if (views.socket) {
+  //console.log(views.socket);
+	if (views.sender === "ws") {
 		const result = getData(views.query, dbmodal);
 		views.socket.send(JSON.stringify(result));
 	} else {
 		collectRequestData(views.req, (query) => {
             const result = getData(query, dbmodal);
-            //const v = valData(quer);
-            //openWS.send(JSON.stringify({n:1, d:quer}))
-            //openWS.send(JSON.stringify({n:2, d:v}))
             views.res.end(JSON.stringify(result));
-            //req.abort();
         });
 	}
 }

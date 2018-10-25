@@ -7,35 +7,19 @@ const ws = new wsServer({port: 5001})
 const views = new require('./control').views;
 const controller = require('./control').controller;
 
-const dataStore =  require('./dbprovider');
+const dataStore =  require('./dbmodel');
 const db = new dataStore();
 
 const fs = require('fs')
 
 
 
-//console.log('check db ',db);
-
-let openWS;
-
-/*ws.on('connection', (socket) => {
-  let d, resp;
-  console.log('WS online');
-  openWS = socket;
-  socket.on('message', (data) => {
-    const v = valData(data);
-    if (v) { resp = getData(JSON.parse(data))}
-    d = {n:1, d:data};
-    socket.send(JSON.stringify(d));
-    d = {n:2, d:resp};
-    socket.send(JSON.stringify(d));
-  })
-}); */
 
 ws.on('connection', (socket) => {
   socket.on('message', (data) => {
     views.socket = socket;
     views.query = data;
+    views.sender = "ws";
     controller(views, db);
   })
 })
@@ -46,10 +30,12 @@ const server = http.createServer((req, res) => {
     if (req.method === 'POST') {
       views.req = req;
       views.res = res;
+      views.sender = "post";
       controller(views, db);
         
     } 
     else {
+      // Загрузка страницы для тестирования
       fs.readFile('./data/index.html', (err, dataF) => {res.end(dataF)})
     }
 });
